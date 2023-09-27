@@ -1,0 +1,49 @@
+{
+  "name": "@bomgar/state-api",
+  "description": "JavaScript library for interacting with the Bomgar Real-Time State API",
+  "author": "BeyondTrust Corporation",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "browser": {
+    "./lib/initSocket.js": "./lib/initWebSocket.js"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "browser": "browserify index.js -t babelify --standalone bomgarState -o dist/state.js",
+    "browser-min": "browserify index.js -t babelify --standalone bomgarState | uglifyjs --compress --mangle --output dist/state.min.js",
+    "browser-watch": "watchify index.js  -t babelify --standalone bomgarState -o dist/state.js",
+    "examples": "npm run browser; pushd ./examples/requirejs; ln -s ../../dist/state.js state.js; popd; pushd ./examples/script-tag; ln -s ../../dist/state.js state.js; popd; pushd ./examples/oauth; ln -s ../../dist/state.js state.js; popd",
+    "examples-min": "npm run browser-min; pushd ./examples/requirejs; ln -s ../../dist/state.min.js state.js; popd; pushd ./examples/script-tag; ln -s ../../dist/state.min.js state.js; popd; pushd ./examples/oauth; ln -s ../../dist/state.min.js state.js; popd"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "private": true,
+  "publishConfig": {
+    "access": "restricted",
+    "ca": null,
+    "registry": "https://verdaccio.bomgar.com/"
+  },
+  "overrides": {
+    "semver": "7.5.2"
+  },
+  "dependencies": {
+    "@babel/cli": "~7.16.0",
+    "@babel/core": "~7.16.0",
+    "@babel/preset-env": "~7.16.0",
+    "babelify": "~10.0.0",
+    "browserify": "~16.5.2",
+    "rx": "4.0.8",
+    "uglify-js": "~3.9.4"
+  },
+  "devDependencies": {
+    "@bomgar/mock-socket": "git+ssh://git@git.bt3ng.com:7999/~bsimpson/mock-socket.git#175a2cc28ff845ed333ccff8722988e4b91c0b41",
+    "@bomgar/test-utils": "git+ssh://git@git.bt3ng.com:7999/try/node-test-utils.git#4f215cc435f6cdf0e61cf8b0020446406406ac35",
+    "chalk": "1.1.3",
+    "eslint": "8.2.0",
+    "express": "~4.17.0",
+    "handlebars": "~4.7.7",
+    "tape": "5.3.1",
+    "yargs": "17.2.1"
+  }
+}
